@@ -3,9 +3,9 @@ import { SocialButton } from '../atoms/SocialButton'
 
 export type SocialProvider = 'github' | 'google'
 
-const providers: { id: SocialProvider; label: string; src: string }[] = [
-  { id: 'github', label: 'Entrar com Github', src: '/github.png' },
-  { id: 'google', label: 'Entrar com Gmail', src: '/gmail.png' },
+const providers: { id: SocialProvider; label: string; src: string; width: number; height: number }[] = [
+  { id: 'github', label: 'Entrar com Github', src: '/github.png', width: 40, height: 55 },
+  { id: 'google', label: 'Entrar com Gmail', src: '/gmail.png', width: 33, height: 51 },
 ]
 
 type SocialLoginProps = {
@@ -17,10 +17,12 @@ export function SocialLogin({ onSelect }: SocialLoginProps) {
     <div className="flex flex-col items-center gap-3">
       <Divider>ou entre com outras contas</Divider>
       <div className="flex items-start gap-6">
-        {providers.map(({ id, label, src }) => (
+        {providers.map(({ id, label, src, width, height }) => (
           <SocialButton
             key={id}
             src={src}
+            width={width}
+            height={height}
             label={label}
             onClick={() => onSelect?.(id)}
           />
