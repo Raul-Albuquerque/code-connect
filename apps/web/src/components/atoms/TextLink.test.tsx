@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { TextLink } from './TextLink'
+import { expectNoA11yViolations } from '../../test/axe'
 
 describe('TextLink', () => {
   it('renders a link with the given href', () => {
@@ -17,5 +18,10 @@ describe('TextLink', () => {
       </TextLink>,
     )
     expect(screen.getByRole('link')).toHaveClass('text-primary')
+  })
+
+  it('has no WCAG 2 AA violations', async () => {
+    const { container } = render(<TextLink href="/esqueci">Esqueci a senha</TextLink>)
+    await expectNoA11yViolations(container)
   })
 })

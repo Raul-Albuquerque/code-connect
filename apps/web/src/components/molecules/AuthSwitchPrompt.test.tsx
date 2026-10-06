@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { AuthSwitchPrompt } from './AuthSwitchPrompt'
+import { expectNoA11yViolations } from '../../test/axe'
 
 describe('AuthSwitchPrompt', () => {
   it('renders the question and a link to the other auth page', () => {
@@ -27,5 +28,16 @@ describe('AuthSwitchPrompt', () => {
       />,
     )
     expect(screen.getByTestId('icon')).toBeInTheDocument()
+  })
+
+  it('has no WCAG 2 AA violations', async () => {
+    const { container } = render(
+      <AuthSwitchPrompt
+        question="Ainda não tem conta?"
+        linkLabel="Crie seu cadastro!"
+        href="/cadastro"
+      />,
+    )
+    await expectNoA11yViolations(container)
   })
 })

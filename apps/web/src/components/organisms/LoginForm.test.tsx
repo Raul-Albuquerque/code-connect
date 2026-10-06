@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { LoginForm } from './LoginForm'
+import { expectNoA11yViolations } from '../../test/axe'
 
 describe('LoginForm', () => {
   it('renders the title, fields and links', () => {
@@ -36,5 +37,10 @@ describe('LoginForm', () => {
     render(<LoginForm onSocialLogin={onSocialLogin} />)
     await userEvent.click(screen.getByRole('button', { name: 'Entrar com Github' }))
     expect(onSocialLogin).toHaveBeenCalledWith('github')
+  })
+
+  it('has no WCAG 2 AA violations', async () => {
+    const { container } = render(<LoginForm />)
+    await expectNoA11yViolations(container)
   })
 })

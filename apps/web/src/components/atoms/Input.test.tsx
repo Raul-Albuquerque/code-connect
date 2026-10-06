@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Input } from './Input'
+import { expectNoA11yViolations } from '../../test/axe'
 
 describe('Input', () => {
   it('renders with the given placeholder', () => {
@@ -18,5 +19,10 @@ describe('Input', () => {
   it('forwards native props such as type', () => {
     render(<Input aria-label="senha" type="password" />)
     expect(screen.getByLabelText('senha')).toHaveAttribute('type', 'password')
+  })
+
+  it('has no WCAG 2 AA violations', async () => {
+    const { container } = render(<Input aria-label="Email ou usuário" />)
+    await expectNoA11yViolations(container)
   })
 })
